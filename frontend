@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Automated Parking System</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        #parking-lot {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 10px;
+        }
+
+        .parking-space {
+            width: 50px;
+            height: 50px;
+            border: 1px solid #333;
+            background-color: #eee;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 14px;
+            cursor: pointer;
+        }
+
+        .occupied {
+            background-color: #ff5252;
+            color: #fff;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Automated Parking System</h1>
+
+    <div id="parking-lot">
+        <!-- Parking spaces will be dynamically generated here -->
+    </div>
+
+    <script>
+        // Simulated data for parking spaces (0 for available, 1 for occupied)
+        const parkingData = [0, 0, 1, 0, 1, 0, 0, 0, 1, 1];
+
+        // Get the parking lot container
+        const parkingLot = document.getElementById('parking-lot');
+
+        // Create parking spaces based on the data
+        parkingData.forEach((status, index) => {
+            const parkingSpace = document.createElement('div');
+            parkingSpace.className = `parking-space ${status ? 'occupied' : ''}`;
+            parkingSpace.textContent = index + 1;
+            parkingSpace.addEventListener('click', () => toggleOccupancy(index));
+            parkingLot.appendChild(parkingSpace);
+        });
+
+        // Function to toggle parking space occupancy
+        function toggleOccupancy(index) {
+            parkingData[index] = parkingData[index] === 0 ? 1 : 0;
+            updateParkingSpaces();
+        }
+
+        // Function to update the visual representation of parking spaces
+        function updateParkingSpaces() {
+            const parkingSpaces = document.querySelectorAll('.parking-space');
+            parkingSpaces.forEach((space, index) => {
+                space.classList.toggle('occupied', parkingData[index] === 1);
+            });
+        }
+    </script>
+
+</body>
+</html>
